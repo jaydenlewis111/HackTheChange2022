@@ -31,13 +31,18 @@ def handle(client):
 
             # Translate message to English
             translator = Translator()
+            # Detect language full name
+            
+            
             message = translator.translate(message, dest='en').text
             # print(f"{nickname}: {message}")
 
             # Broadcast message
             print(f"{nickname} says {message}")
             # broadcast(message)
-            broadcast(f"{nickname}: {message}")
+            # convert f-string to string
+
+            broadcast(f"{lang} {nickname}: {message}".encode('utf-8'))
 
         # except:
         #     # Remove and close clients
