@@ -1,6 +1,9 @@
 import socket
 import threading
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
+
 
 # Create client class with GUI using pyqt5
 class Client:
@@ -38,48 +41,70 @@ class Client:
         # Create GUI using pyqt5
         app = QApplication([])
         window = QWidget()
-        window.setWindowTitle('Chat')
+        window.setWindowTitle('ChatPink - The GUI Messenger')
 
         # make the window full screen
-        window.showFullScreen()
+        #window.showFullScreen()
 
-        window.setStyleSheet("background-color: #2c3e50; color: #ecf0f1;")
-        # window.setWindowIcon(QIcon('icon.png')) 
+        window.setStyleSheet("background-color: #000000; color: #000000;")
+        window.setWindowIcon(QIcon('pink.png')) 
 
-
-        self.message_label = QLabel('Message:')
+        self.message_label = QLabel('Message to Translate:')
         self.input_area = QTextEdit()
 
-        
-        self.chat_label = QLabel('Chat:')
+        self.chat_label = QLabel('Translated Message:')
         self.chat_area = QTextEdit()
+
 
         # change font size of chat area
         font = self.chat_area.font()
-        font.setPointSize(60)
+        font.setPointSize(10)
         self.chat_area.setFont(font)
 
         #change font size of input area
         font = self.input_area.font()
-        font.setPointSize(50)
+        font.setPointSize(10)
         self.input_area.setFont(font)
 
-        # change background of color send
-        self.input_area.setStyleSheet("background-color: #ffc0cb; color: #2c3e50;")
-        self.chat_area.setStyleSheet("background-color: #ffc0cb; color: #2c3e50;")
-        self.message_label.setStyleSheet("background-color: #ecf0f1; color: #2c3e50;")
-        self.chat_label.setStyleSheet("background-color: #ecf0f1; color: #2c3e50;")
+        #change font size of message label 
+
+        self.chat_area.setStyleSheet("background-color: #f4a7bb; color: #2c3e50; ")
+        # change size of chat area
+
+        self.input_area.setStyleSheet("background-color: #f4a7bb; color: #2c3e50;")
+
+        self.chat_area.setFixedHeight(400)
+        self.chat_area.setFixedWidth(400)
+        
+
+
+
+        self.chat_label.setStyleSheet("background-color: #000000; color: #f4a7bb;")
+        font = self.chat_label.font()
+        font.setPointSize(15)
+        self.chat_label.setFont(font)
+
+        self.message_label.setStyleSheet("background-color: #000000; color: #f4a7bb;")
+        font = self.message_label.font()
+        font.setPointSize(15)
+        self.message_label.setFont(font)
+
         self.input_area.setReadOnly(False)
         self.chat_area.setReadOnly(True)
 
 
 
 
-        self.send_button = QPushButton('Send')
-        self.send_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'green'; color: #000000; font-size: 15px; font-weight: bold;")
+        self.send_button = QPushButton('->')
+        self.send_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'green'; color:#000000; font-size: 30px; font-weight: bold;")
         self.send_button.clicked.connect(self.write)
-        self.stop_button = QPushButton('Stop')
-        self.stop_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'red'; color: #000000;  font-size: 15px; font-weight: bold; button-size: 10px;")
+        self.send_button.setFixedSize(400, 50)
+  
+
+        self.stop_button = QPushButton('!')
+        self.stop_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'red'; color: #000000;  font-size: 30px; font-weight: bold;")
+        self.stop_button.setFixedSize(400, 50)
+
         self.stop_button.clicked.connect(self.stop)
 
         layout = QVBoxLayout()
@@ -87,8 +112,10 @@ class Client:
         layout.addWidget(self.chat_area)
         layout.addWidget(self.message_label)
         layout.addWidget(self.input_area)
+        
         layout.addWidget(self.send_button)
         layout.addWidget(self.stop_button)
+
 
         window.setLayout(layout)
         window.show()
