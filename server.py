@@ -24,7 +24,8 @@ def handle(client):
         try:
             # Broadcast messages
             message = client.recv(1024)
-            print(f"{nicknames[clients.index(client)]} says {message}")
+            nickname = nicknames[clients.index(client)]
+            print(f"{nickname} says {message[len(nickname)+2:]}")
             broadcast(message)
         except:
             # Remove and close clients
