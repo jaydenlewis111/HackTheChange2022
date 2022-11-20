@@ -39,7 +39,7 @@ class Client:
         self.chat_area = QTextEdit()
         self.message_label = QLabel('Message:')
         self.input_area = QTextEdit()
-        self.send_button = QPushButton('Send')
+        self.send_button = QPushButton('Send','red')
         self.send_button.clicked.connect(self.write)
 
         layout = QVBoxLayout()
