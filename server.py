@@ -42,7 +42,7 @@ def handle(client):
             # broadcast(message)
             # convert f-string to string
 
-            broadcast(f"{nickname} says in {lang}: {message}".encode('utf-8'))
+            broadcast(f"{nickname} says in {lang.upper()}: {message}".encode('utf-8'))
 
         except:
             # Remove and close clients
