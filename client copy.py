@@ -39,13 +39,47 @@ class Client:
         app = QApplication([])
         window = QWidget()
         window.setWindowTitle('Chat')
-        self.chat_label = QLabel('Chat:')
-        self.chat_area = QTextEdit()
+
+        # make the window full screen
+        window.showFullScreen()
+
+        window.setStyleSheet("background-color: #2c3e50; color: #ecf0f1;")
+        # window.setWindowIcon(QIcon('icon.png')) 
+
+
         self.message_label = QLabel('Message:')
         self.input_area = QTextEdit()
+
+        
+        self.chat_label = QLabel('Chat:')
+        self.chat_area = QTextEdit()
+
+        # change font size of chat area
+        font = self.chat_area.font()
+        font.setPointSize(60)
+        self.chat_area.setFont(font)
+
+        #change font size of input area
+        font = self.input_area.font()
+        font.setPointSize(50)
+        self.input_area.setFont(font)
+
+        # change background of color send
+        self.input_area.setStyleSheet("background-color: #ffc0cb; color: #2c3e50;")
+        self.chat_area.setStyleSheet("background-color: #ffc0cb; color: #2c3e50;")
+        self.message_label.setStyleSheet("background-color: #ecf0f1; color: #2c3e50;")
+        self.chat_label.setStyleSheet("background-color: #ecf0f1; color: #2c3e50;")
+        self.input_area.setReadOnly(False)
+        self.chat_area.setReadOnly(True)
+
+
+
+
         self.send_button = QPushButton('Send')
+        self.send_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'green'; color: #000000; font-size: 15px; font-weight: bold;")
         self.send_button.clicked.connect(self.write)
         self.stop_button = QPushButton('Stop')
+        self.stop_button.setStyleSheet("border: 5px; border-radius: 6px; background-color: 'red'; color: #000000;  font-size: 15px; font-weight: bold; button-size: 10px;")
         self.stop_button.clicked.connect(self.stop)
 
         layout = QVBoxLayout()
@@ -66,6 +100,9 @@ class Client:
         app.exec_()
 
     def write(self):
+        # Voice to text and send to server
+        
+
         # Send message to server
         message = f'{self.nickname}: {self.input_area.toPlainText()}'
         self.client.send(message.encode('utf-8'))
