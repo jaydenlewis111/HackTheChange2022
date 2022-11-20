@@ -1,5 +1,6 @@
 import socket
 import threading
+from googletrans import Translator
 
 HOST = '127.0.0.1'
 PORT = 8080
@@ -21,21 +22,32 @@ def broadcast(message):
 # Handle messages from clients
 def handle(client):
     while True:
-        try:
+        # try:
             # Broadcast messages
-            message = client.recv(1024)
+            message = client.recv(1024).decode('utf-8')
+            print(f"{message}")
             nickname = nicknames[clients.index(client)]
-            print(f"{nickname} says {message[len(nickname)+2:]}")
-            broadcast(message)
-        except:
-            # Remove and close clients
-            index = clients.index(client)
-            clients.remove(client)
-            client.close()
-            nickname = nicknames[index]
-            broadcast(f'{nickname} left the chat!'.encode('utf-8'))
-            nicknames.remove(nickname)
-            break
+            message = message[len(nickname)+2:]
+
+            # Translate message to English
+            translator = Translator()
+            message = translator.translate(message, dest='en').text
+            # print(f"{nickname}: {message}")
+
+            # Broadcast message
+            print(f"{nickname} says {message}")
+            # broadcast(message)
+            broadcast(f"{nickname}: {message}")
+
+        # except:
+        #     # Remove and close clients
+        #     index = clients.index(client)
+        #     clients.remove(client)
+        #     client.close()
+        #     nickname = nicknames[index]
+        #     broadcast(f'{nickname} left the chat!'.encode('utf-8'))
+        #     nicknames.remove(nickname)
+        #     break
 
 # Receive / broadcast messages
 def receive():
