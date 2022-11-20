@@ -22,7 +22,7 @@ def broadcast(message):
 # Handle messages from clients
 def handle(client):
     while True:
-        # try:
+        try:
             # Broadcast messages
             message = client.recv(1024).decode('utf-8')
             print(f"{message}")
@@ -32,7 +32,7 @@ def handle(client):
             # Translate message to English
             translator = Translator()
             # Detect language full name
-            
+            lang = translator.detect(message).lang
             
             message = translator.translate(message, dest='en').text
             # print(f"{nickname}: {message}")
@@ -42,17 +42,17 @@ def handle(client):
             # broadcast(message)
             # convert f-string to string
 
-            broadcast(f"{lang} {nickname}: {message}".encode('utf-8'))
+            broadcast(f"{nickname} says in {lang}: {message}".encode('utf-8'))
 
-        # except:
-        #     # Remove and close clients
-        #     index = clients.index(client)
-        #     clients.remove(client)
-        #     client.close()
-        #     nickname = nicknames[index]
-        #     broadcast(f'{nickname} left the chat!'.encode('utf-8'))
-        #     nicknames.remove(nickname)
-        #     break
+        except:
+            # Remove and close clients
+            index = clients.index(client)
+            clients.remove(client)
+            client.close()
+            nickname = nicknames[index]
+            broadcast(f'{nickname} left the chat!'.encode('utf-8'))
+            nicknames.remove(nickname)
+            break
 
 # Receive / broadcast messages
 def receive():
